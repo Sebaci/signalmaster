@@ -45,7 +45,8 @@ console.log("IP: " + ip);
 
 // server.listen(8888, ip);
 
-var io = require('socket.io').listen(server);
+// var io = require('socket.io').listen(server);
+var io = require('socket.io').attach(port);
 
 if (config.logLevel) {
     // https://github.com/Automattic/socket.io/wiki/Configuring-Socket.IO
