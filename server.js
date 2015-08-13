@@ -6,7 +6,7 @@ var yetify = require('yetify'),
     fs = require('fs'),
     // port = parseInt(process.env.PORT || config.server.port, 10),
     port = parseInt(process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || config.server.port),
-    ip = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+    ip = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1",
     
     server_handler = function (req, res) {
         res.writeHead(404);
