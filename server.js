@@ -6,6 +6,7 @@ var yetify = require('yetify'),
     uuid = require('node-uuid'),
     crypto = require('crypto'),
     fs = require('fs'),
+    eapp = require('express'),
     // port = parseInt(process.env.PORT || config.server.port, 10),
     // port = parseInt(process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || config.server.port),
     port = 8888,
@@ -18,16 +19,23 @@ var yetify = require('yetify'),
     server = null;
 
 // Create an http(s) server instance to that socket.io can listen to
-if (config.server.secure) {
-    server = require('https').Server({
-        key: fs.readFileSync(config.server.key),
-        cert: fs.readFileSync(config.server.cert),
-        passphrase: config.server.password
-    }, server_handler);
-} else {
-    server = require('http').Server(server_handler);
-}
-server.listen(8888, ip);
+// if (config.server.secure) {
+//     server = require('https').Server({
+//         key: fs.readFileSync(config.server.key),
+//         cert: fs.readFileSync(config.server.cert),
+//         passphrase: config.server.password
+//     }, server_handler);
+// } else {
+//     server = require('http').Server(server_handler);
+// }
+
+server = require('http').createServer(eapp).listen(port, ip);
+
+console.log("Port: " + port);
+console.log("IP: " + ip);
+
+
+// server.listen(8888, ip);
 
 var io = require('socket.io').listen(server);
 
@@ -150,6 +158,11 @@ io.sockets.on('connection', function (client) {
             [data.type, data.session, data.prefix, data.peer, data.time, data.value]
         ));
     });
+    
+    client.on('randomMsg', function (data) {
+        console.log('got mst: ' + data.msg);
+        client.emit('randomMsgReply', 'You said: ' + data.msg);
+    });
 
 
     // tell client about stun and turn servers and generate nonces
@@ -177,9 +190,9 @@ if (config.uid) process.setuid(config.uid);
 var httpUrl;
 if (config.server.secure) {
     // httpUrl = "https://localhost:" + port;
-    httpUrl = "https://"+ip+":" + port;
+    httpUrl = "https://" + ip + ":" + port;
 } else {
     // httpUrl = "http://localhost:" + port;
-    httpUrl = "https://"+ip+":" + port;
+    httpUrl = "https://" + ip + ":" + port;
 }
 console.log(yetify.logo() + ' -- signal master is running at: ' + httpUrl);

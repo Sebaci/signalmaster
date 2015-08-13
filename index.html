@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://simplewebrtc.com/latest.js"></script>
+</head>
+
+<body>
+
+<div id="localVideo"></div>
+<div id="remoteVideo"></div>
+
+
+<script src="node_modules/socket.io-client/socket.io.js"></script>
+<script>
+	console.log(io);
+  // io.set("origins","*");
+  var socket = io('http://localhost:8888');
+  
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+</script>
+
+<button id="sendMsg">Send message</button>
+<div id="msgs">
+<h4>Received messages</h4>	
+</div>
+<script>
+	var btn = document.getElementById("sendMsg");
+	btn.addEventListener("click", function(e) {
+		socket.emit("randomMsg", { msg: 'hello!'});
+	});
+	
+	var msgs = document.getElementById('msgs');
+	socket.on('randomMsgReply', function(msg) {
+		console.log("received: " + msg);
+		var element = document.createElement("span");
+		element.innerText = msg;
+		msgs.appendChild(element);
+	})
+	
+
+</script>
+
+
+
+</body>
+
+</html>
