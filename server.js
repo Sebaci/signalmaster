@@ -10,7 +10,7 @@ var yetify = require('yetify'),
     // port = parseInt(process.env.PORT || config.server.port, 10),
     // port = parseInt(process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || config.server.port),
     port = 8888,
-    ip = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1",
+    ip = "127.0.0.1",
     
     server_handler = function (req, res) {
         res.writeHead(404);
@@ -29,7 +29,7 @@ var yetify = require('yetify'),
 //     server = require('http').Server(server_handler);
 // }
 
-eapp.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3002);
+eapp.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || port);
 eapp.set('ip', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
 
 server = require('http').createServer(eapp).listen(eapp.get('port') ,eapp.get('ip'), function () {
