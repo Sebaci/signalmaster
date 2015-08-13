@@ -1,3 +1,5 @@
+console.log("about to start server...");
+
 /*global console*/
 var yetify = require('yetify'),
     config = require('getconfig'),
@@ -5,7 +7,8 @@ var yetify = require('yetify'),
     crypto = require('crypto'),
     fs = require('fs'),
     // port = parseInt(process.env.PORT || config.server.port, 10),
-    port = parseInt(process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || config.server.port),
+    // port = parseInt(process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || config.server.port),
+    port = 8888,
     ip = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1",
     
     server_handler = function (req, res) {
@@ -173,8 +176,10 @@ if (config.uid) process.setuid(config.uid);
 
 var httpUrl;
 if (config.server.secure) {
-    httpUrl = "https://localhost:" + port;
+    // httpUrl = "https://localhost:" + port;
+    httpUrl = "https://"+ip+":" + port;
 } else {
-    httpUrl = "http://localhost:" + port;
+    // httpUrl = "http://localhost:" + port;
+    httpUrl = "https://"+ip+":" + port;
 }
 console.log(yetify.logo() + ' -- signal master is running at: ' + httpUrl);
