@@ -5,7 +5,8 @@ var yetify = require('yetify'),
     crypto = require('crypto'),
     fs = require('fs'),
     // port = parseInt(process.env.PORT || config.server.port, 10),
-    port = parseInt(process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || config.server.port,
+    port = parseInt(process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || config.server.port),
+    ip = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
     
     server_handler = function (req, res) {
         res.writeHead(404);
@@ -23,7 +24,7 @@ if (config.server.secure) {
 } else {
     server = require('http').Server(server_handler);
 }
-server.listen(port);
+server.listen(port, ip);
 
 var io = require('socket.io').listen(server);
 
