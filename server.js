@@ -9,7 +9,7 @@ var yetify = require('yetify'),
     eapp = require('express'),
     // port = parseInt(process.env.PORT || config.server.port, 10),
     // port = parseInt(process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || config.server.port),
-    port = 8888,
+    port = 8080,
     ip = "127.0.0.1",
     
     server_handler = function (req, res) {
@@ -30,9 +30,9 @@ var yetify = require('yetify'),
 // }
 
 // eapp.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || port);
-// eapp.set('ip', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
+eapp.set('ip', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
 eapp.set('port', port);
-eapp.set('ip', ip);
+// eapp.set('ip', ip);
 
 server = require('http').createServer(eapp).listen(eapp.get('port') ,eapp.get('ip'), function () {
     console.log("Express server listening at %s:%d ", eapp.get('ip'), eapp.get('port'));
