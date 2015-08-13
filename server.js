@@ -24,7 +24,7 @@ if (config.server.secure) {
 } else {
     server = require('http').Server(server_handler);
 }
-server.listen(port, ip);
+server.listen(8888, ip);
 
 var io = require('socket.io').listen(server);
 
