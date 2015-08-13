@@ -5,7 +5,8 @@ var yetify = require('yetify'),
     crypto = require('crypto'),
     fs = require('fs'),
     // port = parseInt(process.env.PORT || config.server.port, 10),
-    port = parseInt(config.server.port, 10),
+    port = parseInt(process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || config.server.port
+    
     server_handler = function (req, res) {
         res.writeHead(404);
         res.end();
