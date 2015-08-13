@@ -29,8 +29,10 @@ var yetify = require('yetify'),
 //     server = require('http').Server(server_handler);
 // }
 
-eapp.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || port);
-eapp.set('ip', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
+// eapp.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || port);
+// eapp.set('ip', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
+eapp.set('port', port);
+eapp.set('ip', ip);
 
 server = require('http').createServer(eapp).listen(eapp.get('port') ,eapp.get('ip'), function () {
     console.log("Express server listening at %s:%d ", eapp.get('ip'), eapp.get('port'));
