@@ -4,7 +4,8 @@ var yetify = require('yetify'),
     uuid = require('node-uuid'),
     crypto = require('crypto'),
     fs = require('fs'),
-    port = parseInt(process.env.PORT || config.server.port, 10),
+    // port = parseInt(process.env.PORT || config.server.port, 10),
+    port = parseInt(config.server.port, 10),
     server_handler = function (req, res) {
         res.writeHead(404);
         res.end();
